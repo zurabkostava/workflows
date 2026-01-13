@@ -1,0 +1,18 @@
+name: Supabase Heartbeat (Anti-Pause)
+
+on:
+  schedule:
+    # ეშვება ყოველ 6 დღეში, დილის 08:00-ზე (UTC)
+    # ეს უზრუნველყოფს, რომ 7-დღიან ლიმიტს არასდროს გადავცდეთ.
+    - cron: '0 8 */6 * *'
+  workflow_dispatch: # ეს საშუალებას გაძლევს ხელითაც გაუშვა ტესტირებისთვის
+
+jobs:
+  ping_supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wake up Supabase
+        run: |
+          curl -X GET 'https://cblxbanbssnflgyrzhah.supabase.co/rest/v1/book_projects?select=id&limit=1' \
+          -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNibHhiYW5ic3NuZmxneXJ6aGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM2Mzk0NDYsImV4cCI6MjA3OTIxNTQ0Nn0.36w4C_Y8TsTJ2ifORlE5vQu-yMHYCCD-Ebetz8CpQ9A' \
+          -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNibHhiYW5ic3NuZmxneXJ6aGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM2Mzk0NDYsImV4cCI6MjA3OTIxNTQ0Nn0.36w4C_Y8TsTJ2ifORlE5vQu-yMHYCCD-Ebetz8CpQ9A'
